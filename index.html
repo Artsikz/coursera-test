@@ -3,83 +3,104 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Maze Game</title>
+<title>Welcome to Course's Program</title>
 <style>
     body {
+        font-family: Arial, sans-serif;
+        background-color: #f7f7f7;
         margin: 0;
         padding: 0;
         display: flex;
         justify-content: center;
         align-items: center;
         height: 100vh;
+    }
+
+    #calculator {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+
+    .calculator-btn {
+        width: 50px;
+        height: 50px;
+        margin: 5px;
+        font-size: 18px;
+        border: none;
         background-color: #f0f0f0;
+        border-radius: 8px;
+        cursor: pointer;
     }
 
-    #maze {
-        position: relative;
-        width: 400px;
-        height: 400px;
-        background-color: #eee;
-        border: 2px solid #999;
+    .calculator-btn:hover {
+        background-color: #e0e0e0;
     }
 
-    #ball {
-        position: absolute;
-        width: 20px;
-        height: 20px;
-        background-color: red;
-        border-radius: 50%;
-    }
-
-    .wall {
-        background-color: #333;
+    #result {
+        width: 100%;
+        padding: 10px;
+        font-size: 24px;
+        text-align: right;
+        border: none;
+        border-radius: 8px;
+        margin-bottom: 10px;
     }
 </style>
 </head>
 <body>
-<div id="maze">
-    <div id="ball"></div>
-    <!-- Define your maze walls here -->
-    <div class="wall" style="position: absolute; top: 0; left: 120px; width: 160px; height: 20px;"></div>
-    <div class="wall" style="position: absolute; top: 80px; left: 80px; width: 20px; height: 240px;"></div>
-    <div class="wall" style="position: absolute; top: 320px; left: 120px; width: 160px; height: 20px;"></div>
-    <div class="wall" style="position: absolute; top: 80px; left: 280px; width: 20px; height: 180px;"></div>
+<div id="calculator">
+    <h1>Welcome to Course's Program</h1>
+    <input type="text" id="result" readonly>
+    <div>
+        <button class="calculator-btn" onclick="appendToResult('7')">7</button>
+        <button class="calculator-btn" onclick="appendToResult('8')">8</button>
+        <button class="calculator-btn" onclick="appendToResult('9')">9</button>
+        <button class="calculator-btn" onclick="appendToResult('+')">+</button>
+    </div>
+    <div>
+        <button class="calculator-btn" onclick="appendToResult('4')">4</button>
+        <button class="calculator-btn" onclick="appendToResult('5')">5</button>
+        <button class="calculator-btn" onclick="appendToResult('6')">6</button>
+        <button class="calculator-btn" onclick="appendToResult('-')">-</button>
+    </div>
+    <div>
+        <button class="calculator-btn" onclick="appendToResult('1')">1</button>
+        <button class="calculator-btn" onclick="appendToResult('2')">2</button>
+        <button class="calculator-btn" onclick="appendToResult('3')">3</button>
+        <button class="calculator-btn" onclick="appendToResult('*')">*</button>
+    </div>
+    <div>
+        <button class="calculator-btn" onclick="appendToResult('0')">0</button>
+        <button class="calculator-btn" onclick="clearResult()">C</button>
+        <button class="calculator-btn" onclick="calculateResult()">=</button>
+        <button class="calculator-btn" onclick="appendToResult('/')">/</button>
+    </div>
 </div>
 
 <script>
-    const ball = document.getElementById('ball');
-    const maze = document.getElementById('maze');
-
-    const mazeWidth = maze.offsetWidth;
-    const mazeHeight = maze.offsetHeight;
-    const ballSize = ball.offsetWidth;
-
-    let ballX = 10;
-    let ballY = 10;
-
-    function moveBall(dx, dy) {
-        const newX = ballX + dx;
-        const newY = ballY + dy;
-
-        if (newX >= 0 && newX <= mazeWidth - ballSize && newY >= 0 && newY <= mazeHeight - ballSize) {
-            ballX = newX;
-            ballY = newY;
-            ball.style.left = ballX + 'px';
-            ball.style.top = ballY + 'px';
-        }
+    function appendToResult(value) {
+        document.getElementById("result").value += value;
     }
 
-    document.addEventListener('keydown', (event) => {
-        if (event.key === 'ArrowUp') {
-            moveBall(0, -10);
-        } else if (event.key === 'ArrowDown') {
-            moveBall(0, 10);
-        } else if (event.key === 'ArrowLeft') {
-            moveBall(-10, 0);
-        } else if (event.key === 'ArrowRight') {
-            moveBall(10, 0);
+    function clearResult() {
+        document.getElementById("result").value = '';
+    }
+
+    function calculateResult() {
+        try {
+            const result = eval(document.getElementById("result").value);
+            document.getElementById("result").value = result;
+        } catch (error) {
+            alert('Invalid calculation!');
         }
-    });
+    }
 </script>
 </body>
 </html>
