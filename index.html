@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maze Game</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f0f0f0;
+    }
+
+    #maze {
+        position: relative;
+        width: 400px;
+        height: 400px;
+        background-color: #eee;
+        border: 2px solid #999;
+    }
+
+    #ball {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background-color: red;
+        border-radius: 50%;
+    }
+
+    .wall {
+        background-color: #333;
+    }
+</style>
+</head>
+<body>
+<div id="maze">
+    <div id="ball"></div>
+    <!-- Define your maze walls here -->
+    <div class="wall" style="position: absolute; top: 0; left: 120px; width: 160px; height: 20px;"></div>
+    <div class="wall" style="position: absolute; top: 80px; left: 80px; width: 20px; height: 240px;"></div>
+    <div class="wall" style="position: absolute; top: 320px; left: 120px; width: 160px; height: 20px;"></div>
+    <div class="wall" style="position: absolute; top: 80px; left: 280px; width: 20px; height: 180px;"></div>
+</div>
+
+<script>
+    const ball = document.getElementById('ball');
+    const maze = document.getElementById('maze');
+
+    const mazeWidth = maze.offsetWidth;
+    const mazeHeight = maze.offsetHeight;
+    const ballSize = ball.offsetWidth;
+
+    let ballX = 10;
+    let ballY = 10;
+
+    function moveBall(dx, dy) {
+        const newX = ballX + dx;
+        const newY = ballY + dy;
+
+        if (newX >= 0 && newX <= mazeWidth - ballSize && newY >= 0 && newY <= mazeHeight - ballSize) {
+            ballX = newX;
+            ballY = newY;
+            ball.style.left = ballX + 'px';
+            ball.style.top = ballY + 'px';
+        }
+    }
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowUp') {
+            moveBall(0, -10);
+        } else if (event.key === 'ArrowDown') {
+            moveBall(0, 10);
+        } else if (event.key === 'ArrowLeft') {
+            moveBall(-10, 0);
+        } else if (event.key === 'ArrowRight') {
+            moveBall(10, 0);
+        }
+    });
+</script>
+</body>
+</html>
